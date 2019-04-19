@@ -18,6 +18,9 @@ $(document).ready(function() {
     itemCount++;
     var item = $(e.target).clone();
     item.addClass('item' + itemCount)
+    item.data('data-x', 100);
+    item.data('data-y', 100);
+    item.css( 'z-index', itemCount);
     $('.preview').append(item);
     
     interact('.item' + itemCount)
