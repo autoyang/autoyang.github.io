@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta name="description" content="Get your free hat to show support for that $1000 stipend bag"/>
+
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.css">
+        <title>AutoYang - Get your free hat, thanks to automation</title>
+        <script type="text/javascript" src="js/jimp.min.js"></script>
+        <script type="text/javascript" src="js/jquery-3.4.0.min.js"></script>
+        <script type="text/javascript" src="js/interact.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+
+        
+    </head>
+    <body style="background: #1b1b1b; padding: 15px;">
+        <div class="container bg-light">
+            <h1>AutoYang 1000</h1>
+            <img src="images/cartoon-pink-mockup.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/gray-mockup.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/index.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none;" class="item">
+            <img src="images/math-hat.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/money-bag.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/one-thousand.jpg" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/pink-facing-right.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/pink-mockup.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/purple-mockup.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/stolen-design.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/tan-mockup.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/vector-left.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/vector-right.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/white-mockup.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+            <img src="images/yang-gang-2020-baseball-cap.png" style="width: 100px; height: auto touch-action: none" class="item">
+            <img src="images/yang-logo.png" style="width: 100px; height: auto; cursor: pointer; touch-action: none" class="item">
+
+            <form class="controls" style="">
+                <div class="row">
+                    <div class="col">
+                        <div style="padding: 5px 0;">
+                            <label for="upload">Select Image</label>
+                            <input type="file" class="form-control" id="upload">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-dark save">Save 💾</button>
+                    </div>
+                </div>
+            </form>
+            <div class="preview">
+                <img src="cat.jpg" id="cat">
+            </div>
+            <canvas id="canvas" width="500" height="500" style="display: none;"></canvas>
+        </div>
+        
+</div>
+    </body>
+</html>
