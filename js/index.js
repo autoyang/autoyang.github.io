@@ -100,7 +100,8 @@ $(document).ready(function() {
   });
 });
 
-var temp = {
+
+var examples = { // Not used, just some left over from copy and paste
   displayImage: function(img) {
     var newImageData = Buffer.from(img.src.replace('data:image/jpeg;base64', ''), 'base64')
     Jimp.read(newImageData).then(function (image) {
@@ -113,89 +114,28 @@ var temp = {
     })
   },
 
-  // Update DOM on a Received Event
-  receivedEvent: function(id) {
-    console.log('Received Event: ' + id);
-    
-  },
+  partial: function() {
+    var imageData = Buffer.from(img.src.replace('data:image/png;base64', ''), 'base64')
+    Jimp.read(imageData).then(function (image) {
+      var centerX = rect.x + (rect.width / 2)
+      var centerY = rect.y + (rect.height / 2)
+      var x = centerX - rect.height;
+      if (x < 0) { x = 0;  }
+      var y = centerY - rect.height;
+      if (y < 0) { y = 0; }
+      var width = rect.height * 2;
+      if (x + width > image.bitmap.width) { width = image.bitmap.width - x }
+      var height = rect.height * 2;
+      if (y + height > image.bitmap.height) { height = image.bitmap.height - y}
 
-  startScanning: function() {
-    var self = this;
-    var options = {
-      quality: 75,
-      destinationType: Camera.DestinationType.DATA_URL,
-      encodingType: Camera.EncodingType.JPEG,
-      correctOrientation: true
-    }
-    console.log(Camera, navigator.camera)
-    navigator.camera.getPicture(function cameraSuccess(imageData) {
-      console.log('oi')
-    }, function cameraError(error) {
-        console.debug("Unable to obtain picture: " + error, "app");
-    }, options);
-
-    var img = document.getElementById('preview')
-    var tracker = new tracking.ObjectTracker(['face']);
-    tracker.setStepSize(1.7);
-    var count = 0;
-    tracker.on('track', (event) => {
-      count++;
-      //if (event.data.length === 0) { return; }
-      event.data.forEach((rect) => {
-        var imageData = Buffer.from(img.src.replace('data:image/png;base64', ''), 'base64')
-        Jimp.read(imageData).then(function (image) {
-          var centerX = rect.x + (rect.width / 2)
-          var centerY = rect.y + (rect.height / 2)
-          var x = centerX - rect.height;
-          if (x < 0) { x = 0;  }
-          var y = centerY - rect.height;
-          if (y < 0) { y = 0; }
-          var width = rect.height * 2;
-          if (x + width > image.bitmap.width) { width = image.bitmap.width - x }
-          var height = rect.height * 2;
-          if (y + height > image.bitmap.height) { height = image.bitmap.height - y}
-
-          image.clone()
-            .crop(x, y, width, height)
-            .cover(224, 224)
-            .flip(true, false)
-            .getBase64(Jimp.MIME_JPEG, function (err, src) {
-              document.getElementById('facepreview').src = src;
-              var newImg = new Image();
-              var context = document.getElementById('tfcanvas').getContext('2d');
-              newImg.onload = function() {
-                context.drawImage(newImg, 0, 0, 224, 224);
-                self.classify(document.getElementById('tfcanvas')).then(function(results) {
-                  var baseline = results[0].toPrecision(5);
-                  var lust = results[1].toPrecision(5)
-                  console.log(baseline, lust)
-                  if ( baseline < 0.1 && lust > 0.9) {
-                    self.displayImage(newImg)
-                    if (navigator.vibrate) {
-                      navigator.vibrate(200)
-                    }
-                  }
-                });
-              };
-              newImg.src = src;
-           });
-        }).catch(function (err) {
-            console.error(err);
-        });
-      });
+      image.clone()
+        .crop(x, y, width, height)
+        .cover(224, 224)
+        .flip(true, false)
+        .getBase64(Jimp.MIME_JPEG, function (err, src) {
+          document.getElementById('facepreview').src = src;
+        })
     });
-
-    setInterval(() => {
-      var video = document.getElementsByTagName("VIDEO")[0];
-      if (!video) { return; }
-      var canvas = document.getElementById('canvas');
-      var context = canvas.getContext('2d');
-      context.drawImage(video, 0, 0, video.width, video.height);
-      dataURL = canvas.toDataURL('image/png', 0.75);
-      var elem = document.getElementById('preview');
-      elem.src = dataURL;
-
-      tracking.track('#preview', tracker);
-    }, 1000)
   }
+   
 };
